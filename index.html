@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Para Brunella ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+color:white;
+text-align:center;
+overflow:hidden;
+}
+
+/* pantalla inicio */
+
+#intro{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+#intro h1{
+font-family:'Great Vibes',cursive;
+font-size:70px;
+margin:0;
+}
+
+#intro h2{
+font-size:30px;
+margin-bottom:20px;
+}
+
+button{
+padding:15px 35px;
+font-size:20px;
+border:none;
+border-radius:30px;
+background:white;
+color:#ff4b6e;
+cursor:pointer;
+}
+
+/* galeria */
+
+#gallery{
+display:none;
+height:100vh;
+justify-content:center;
+align-items:center;
+}
+
+#gallery img{
+max-width:80%;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+opacity:0;
+transition:1s;
+}
+
+/* mensaje final */
+
+#message{
+display:none;
+height:100vh;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:60px;
+font-size:34px;
+line-height:1.6;
+}
+
+/* corazones */
+
+.heart{
+position:fixed;
+bottom:-10px;
+font-size:25px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+
+0%{
+transform:translateY(0);
+opacity:1;
+}
+
+100%{
+transform:translateY(-100vh);
+opacity:0;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div id="intro">
+
+<h1>Brunella ❤️</h1>
+
+<h2>¿Lista para la aventura?</h2>
+
+<p>
+Hoy solo quiero decirte que sigo aquí,<br>
+aprendiendo, cambiando y queriendo<br>
+construir algo más bonito contigo.
+</p>
+
+<button onclick="start()">Comenzar</button>
+
+</div>
+
+
+<div id="gallery">
+<img id="photo">
+</div>
+
+
+<div id="message">
+<p id="text"></p>
+</div>
+
+
+<audio id="music" src="Camila.mp3"></audio>
+
+
+<script>
+
+const fotos=[
+"foto1.jpg",
+"foto2.jpg",
+"foto3.jpg",
+"foto4.jpg",
+"foto5.jpg"
+];
+
+const mensaje=`Pajarita... 💌
+
+No quiero prometerte perfección,
+pero sí un corazón que cada día
+está aprendiendo a amar mejor.
+
+Quiero que cada momento que vivamos
+sea un paso firme y sincero,
+lleno de cariño, paciencia y comprensión.
+
+Porque incluso en los días simples,
+o en esos donde ni te bañas jeje...
+sigues siendo alguien muy especial para mí.`;
+
+let i=0;
+let letra=0;
+
+function start(){
+
+document.getElementById("intro").style.display="none";
+document.getElementById("gallery").style.display="flex";
+
+document.getElementById("music").play();
+
+setInterval(createHeart,500);
+
+showPhoto();
+
+}
+
+function showPhoto(){
+
+const img=document.getElementById("photo");
+
+img.style.opacity=0;
+
+setTimeout(()=>{
+img.src=fotos[i];
+img.style.opacity=1;
+},500);
+
+i++;
+
+if(i<fotos.length){
+setTimeout(showPhoto,4000);
+}else{
+setTimeout(showMessage,4000);
+}
+
+}
+
+function showMessage(){
+
+document.getElementById("gallery").style.display="none";
+
+const message=document.getElementById("message");
+
+message.style.display="flex";
+
+typeText();
+
+}
+
+function typeText(){
+
+if(letra<mensaje.length){
+
+document.getElementById("text").innerHTML+=mensaje.charAt(letra);
+
+letra++;
+
+setTimeout(typeText,40);
+
+}
+
+}
+
+function createHeart(){
+
+const heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},6000);
+
+}
+
+</script>
+
+</body>
+</html>
