@@ -1,147 +1,106 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Para Brunella ❤️</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
 
 body{
 margin:0;
-font-family:'Poppins',sans-serif;
-background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+background:#000;
 color:white;
+font-family:Arial;
 text-align:center;
 overflow:hidden;
 }
 
-/* pantalla inicio */
-
-#intro{
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-}
-
-#intro h1{
-font-family:'Great Vibes',cursive;
-font-size:70px;
-margin:0;
-}
-
-#intro h2{
-font-size:30px;
-margin-bottom:20px;
+#inicio{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
 }
 
 button{
-padding:15px 35px;
+padding:15px 30px;
 font-size:20px;
 border:none;
-border-radius:30px;
-background:white;
-color:#ff4b6e;
+border-radius:10px;
+background:#ff4d6d;
+color:white;
 cursor:pointer;
 }
 
-/* galeria */
-
-#gallery{
+#galeria{
 display:none;
-height:100vh;
-justify-content:center;
-align-items:center;
 }
 
-#gallery img{
+img{
 max-width:80%;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,0.4);
-opacity:0;
-transition:1s;
+max-height:70vh;
+border-radius:15px;
+margin-top:40px;
 }
 
-/* mensaje final */
-
-#message{
+#mensaje{
 display:none;
-height:100vh;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:60px;
-font-size:34px;
+font-size:28px;
+width:80%;
+margin:auto;
+margin-top:20vh;
 line-height:1.6;
 }
 
-/* corazones */
-
-.heart{
+.corazon{
 position:fixed;
-bottom:-10px;
-font-size:25px;
-animation:float 6s linear infinite;
+top:-10px;
+color:red;
+font-size:24px;
+animation:caer 5s linear infinite;
 }
 
-@keyframes float{
-
-0%{
-transform:translateY(0);
-opacity:1;
-}
-
-100%{
-transform:translateY(-100vh);
-opacity:0;
-}
-
+@keyframes caer{
+0%{transform:translateY(-10px);}
+100%{transform:translateY(110vh);}
 }
 
 </style>
-
 </head>
 
 <body>
 
+<div id="inicio">
+<h1>¿Lista para la aventura?</h1>
+<button onclick="iniciar()">Comenzar</button>
+</div>
 
-<div id="intro">
+<div id="galeria">
+<img id="foto" src="">
+</div>
 
-<h1>Brunella ❤️</h1>
-
-<h2>¿Lista para la aventura?</h2>
-
+<div id="mensaje">
 <p>
-Hoy solo quiero decirte que sigo aquí,<br>
-aprendiendo, cambiando y queriendo<br>
-construir algo más bonito contigo.
+Pajarita…<br><br>
+
+no quiero prometerte perfección,<br>
+pero sí un corazón que está aprendiendo a amar mejor.<br><br>
+
+Que cada momento sea un pequeño paso firme y seguro,<br>
+lleno de cariño, amor y comprensión.<br><br>
+
+Te quiero… aunque a veces no te bañes jeje ❤️
 </p>
-
-<button onclick="start()">Comenzar</button>
-
 </div>
 
-
-<div id="gallery">
-<img id="photo">
-</div>
-
-
-<div id="message">
-<p id="text"></p>
-</div>
-
-
-<audio id="music" src="Camila.mp3"></audio>
-
+<audio id="musica">
+<source src="Camila.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 
-const fotos=[
+let fotos=[
 "foto1.jpg",
 "foto2.jpg",
 "foto3.jpg",
@@ -149,98 +108,53 @@ const fotos=[
 "foto5.jpg"
 ];
 
-const mensaje=`Pajarita... 💌
-
-No quiero prometerte perfección,
-pero sí un corazón que cada día
-está aprendiendo a amar mejor.
-
-Quiero que cada momento que vivamos
-sea un paso firme y sincero,
-lleno de cariño, paciencia y comprensión.
-
-Porque incluso en los días simples,
-o en esos donde ni te bañas jeje...
-sigues siendo alguien muy especial para mí.`;
-
 let i=0;
-let letra=0;
 
-function start(){
+function iniciar(){
 
-document.getElementById("intro").style.display="none";
-document.getElementById("gallery").style.display="flex";
+document.getElementById("inicio").style.display="none";
+document.getElementById("galeria").style.display="block";
 
-document.getElementById("music").play();
+let audio=document.getElementById("musica");
+audio.play();
 
-setInterval(createHeart,500);
-
-showPhoto();
-
+mostrarFoto();
+corazones();
 }
 
-function showPhoto(){
-
-const img=document.getElementById("photo");
-
-img.style.opacity=0;
-
-setTimeout(()=>{
-img.src=fotos[i];
-img.style.opacity=1;
-},500);
-
-i++;
+function mostrarFoto(){
 
 if(i<fotos.length){
-setTimeout(showPhoto,4000);
+
+document.getElementById("foto").src=fotos[i];
+i++;
+
+setTimeout(mostrarFoto,3000);
+
 }else{
-setTimeout(showMessage,4000);
-}
 
-}
-
-function showMessage(){
-
-document.getElementById("gallery").style.display="none";
-
-const message=document.getElementById("message");
-
-message.style.display="flex";
-
-typeText();
-
-}
-
-function typeText(){
-
-if(letra<mensaje.length){
-
-document.getElementById("text").innerHTML+=mensaje.charAt(letra);
-
-letra++;
-
-setTimeout(typeText,40);
+document.getElementById("galeria").style.display="none";
+document.getElementById("mensaje").style.display="block";
 
 }
 
 }
 
-function createHeart(){
+function corazones(){
 
-const heart=document.createElement("div");
+setInterval(()=>{
 
-heart.className="heart";
+let c=document.createElement("div");
+c.className="corazon";
+c.innerHTML="❤️";
 
-heart.innerHTML="❤️";
+c.style.left=Math.random()*100+"vw";
 
-heart.style.left=Math.random()*100+"vw";
+document.body.appendChild(c);
 
-document.body.appendChild(heart);
+setTimeout(()=>{c.remove()},5000);
 
-setTimeout(()=>{
-heart.remove();
-},6000);
+},300);
 
 }
 
